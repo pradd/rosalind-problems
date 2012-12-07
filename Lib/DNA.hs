@@ -11,10 +11,10 @@ instance Show DNA where
 
 fromString s = DNA (map (\x -> read [x]) s)
 
-fromNucleotides :: [N.Nucleotide] -> DNA
-fromNucleotides ns = DNA (map toDnaNucleo ns)
+nucleotidesToDna :: [N.Nucleotide] -> DNA
+nucleotidesToDna ns = DNA (map toDnaNucleo ns)
     where   toDnaNucleo N.U = T
             toDnaNucleo x   = read $ show x
 
-toNucleotides :: DNA -> [N.Nucleotide]
-toNucleotides (DNA ns) = map (read . show) ns
+dnaToNucleotides :: DNA -> [N.Nucleotide]
+dnaToNucleotides (DNA ns) = map (read . show) ns
