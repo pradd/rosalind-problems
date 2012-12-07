@@ -7,8 +7,9 @@ data RnaNucleotide = A | G | C | U deriving (Eq, Ord, Show, Read )
 data RNA = RNA [RnaNucleotide] deriving (Ord, Eq)
 
 instance Show RNA where
-    show (RNA ns) = concat $ map show ns
+    show (RNA ns) = concatMap show ns
 
+fromString :: String -> RNA
 fromString s = RNA (map (\x -> read [x]) s)
 
 nucleotidesToRna :: [N.Nucleotide] -> RNA

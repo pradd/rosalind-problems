@@ -7,8 +7,9 @@ data DnaNucleotide = A | G | C | T deriving (Eq, Ord, Show, Read )
 data DNA = DNA [DnaNucleotide] deriving (Ord, Eq)
 
 instance Show DNA where
-    show (DNA ns) = concat $ map show ns
+    show (DNA ns) = concatMap show ns
 
+fromString :: String -> DNA
 fromString s = DNA (map (\x -> read [x]) s)
 
 nucleotidesToDna :: [N.Nucleotide] -> DNA
