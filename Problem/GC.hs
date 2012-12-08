@@ -37,9 +37,12 @@ Rosalind_0808
 
 module Problem.GC where
 
+import Text.Printf (printf)
+
 import Lib.DNA
 import Lib.Fasta
 
+testInput :: FastaFileString
 testInput =    ">Rosalind_6404\n"
             ++ "CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCC\n"
             ++ "TCCCACTAATAATTCTGAGG\n"
@@ -50,9 +53,32 @@ testInput =    ">Rosalind_6404\n"
             ++ "CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGAC\n"
             ++ "TGGGAACCTGCGGGCAGTAGGTGGAAT\n"
 
+testOutput :: String
 testOutput =    "Rosalind_0808\n"
             ++  "60.919540%\n"
 
-process = undefined
+gcContent :: DNA -> Float
+gcContent (DNA dna) = fromIntegral gcCount / fromIntegral total
+        where gcCount = length $ filter isGC dna
+              total = length dna
+              isGC G = True
+              isGC C = True
+              isGC _ = False
 
-test = process testInput /= testOutput
+process :: FastaFileString -> String 
+process input = toPrintableFormat $ foldl1 max' $ map countGcContent $ parseFastaFileString input 
+    where countGcContent (FastaRecord { desc = d, nucleoStr = ns}) = (d, gcContent $ nucleotidesToDna ns)
+          max' x@(_, gc1) y@(_, gc2) | gc2 > gc1 = y
+                                     | otherwise = x
+          toPrintableFormat (d, number) = unlines [d, printPercent number]
+
+printPercent :: Float -> String
+printPercent float = printf "%.6f" (float * 100) ++ "%"
+
+test :: Bool
+test = process testInput == testOutput
+
+testGcContent :: Bool
+testGcContent = gcContent (fromString "AGCTATAG") == 0.375 
+
+
