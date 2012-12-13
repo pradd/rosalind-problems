@@ -2,6 +2,7 @@ module Main where
 
 import Problem.GC (test, testGcContent)
 import Problem.PERM (test)
+import Problem.LCS (test, testSplitPattern)
 
 main :: IO ()
 main = putStrLn testResults 
@@ -12,7 +13,9 @@ testResults = unlines $ map out tests
                              | otherwise = desc ++ "  FAILED"
 
 tests :: [(Bool, String)]
-tests = [ (Problem.GC.test,          "GC   : main      ")
-        , (Problem.GC.testGcContent, "GC   : gc-content")
-        , (Problem.PERM.test,        "PERM : main      ")
+tests = [ (Problem.GC.test,                 "GC   : main                ")
+        , (Problem.GC.testGcContent,        "GC   : gc-content          ")
+        , (Problem.PERM.test,               "PERM : main                ")
+        , (Problem.LCS.test,                "LCS  : main                ")
+        , (Problem.LCS.testSplitPattern,    "LCS  : testSplitPattern    ")
         ]
