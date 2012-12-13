@@ -1,21 +1,23 @@
 module Lib.RNA where
 
-import qualified Lib.Nucleotide as N
+import Lib.Nucleotide
 
-data RnaNucleotide = A | G | C | U deriving (Eq, Ord, Show, Read )
-
-data RNA = RNA [RnaNucleotide] deriving (Ord, Eq)
+data RNA = RNA [Nucleotide] deriving (Ord, Eq)
 
 instance Show RNA where
     show (RNA ns) = concatMap show ns
 
 fromString :: String -> RNA
-fromString s = RNA (map (\x -> read [x]) s)
+fromString s = nucleotidesToRnaValidating $ stringToNucleotides s
 
-nucleotidesToRna :: [N.Nucleotide] -> RNA
+nucleotidesToRna :: [Nucleotide] -> RNA
 nucleotidesToRna ns = RNA (map toRnaNucleo ns)
-    where   toRnaNucleo N.T = U
-            toRnaNucleo x   = read $ show x
+    where   toRnaNucleo T = U
+            toRnaNucleo x = x
 
-rnaToNucleotides :: RNA -> [N.Nucleotide]
-rnaToNucleotides (RNA ns) = map (read . show) ns
+nucleotidesToRnaValidating :: [Nucleotide] -> RNA
+nucleotidesToRnaValidating ns | T `elem` ns = error "Nucleotide T is not allowed for RNA"
+                              | otherwise   = nucleotidesToRna ns
+
+rnaToNucleotides :: RNA -> [Nucleotide]
+rnaToNucleotides (RNA ns) = ns

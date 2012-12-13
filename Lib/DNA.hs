@@ -1,21 +1,23 @@
 module Lib.DNA where
 
-import qualified Lib.Nucleotide as N
+import Lib.Nucleotide
 
-data DnaNucleotide = A | G | C | T deriving (Eq, Ord, Show, Read )
-
-data DNA = DNA [DnaNucleotide] deriving (Ord, Eq)
+data DNA = DNA [Nucleotide] deriving (Ord, Eq)
 
 instance Show DNA where
     show (DNA ns) = concatMap show ns
 
 fromString :: String -> DNA
-fromString s = DNA (map (\x -> read [x]) s)
+fromString s = nucleotidesToDnaValidating $ stringToNucleotides s
 
-nucleotidesToDna :: [N.Nucleotide] -> DNA
+nucleotidesToDna :: [Nucleotide] -> DNA
 nucleotidesToDna ns = DNA (map toDnaNucleo ns)
-    where   toDnaNucleo N.U = T
-            toDnaNucleo x   = read $ show x
+    where   toDnaNucleo U = T
+            toDnaNucleo x = x
 
-dnaToNucleotides :: DNA -> [N.Nucleotide]
+nucleotidesToDnaValidating :: [Nucleotide] -> DNA
+nucleotidesToDnaValidating ns | U `elem` ns = error "Nucleotide U is not allowed for DNA"
+                              | otherwise   = nucleotidesToDna ns
+
+dnaToNucleotides :: DNA -> [Nucleotide]
 dnaToNucleotides (DNA ns) = map (read . show) ns

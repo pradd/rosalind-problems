@@ -39,6 +39,7 @@ module Problem.GC where
 
 import Text.Printf (printf)
 
+import Lib.Nucleotide
 import Lib.DNA
 import Lib.Fasta
 
