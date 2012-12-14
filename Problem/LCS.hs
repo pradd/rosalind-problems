@@ -20,6 +20,13 @@ AC
 
 -}
 
+{-
+ Managed to run it compiled with 64-bit ghc-7.6.1 under 6 GB memory, 
+ execution took 4 GB memory and 60 seconds.  
+
+main.exe < rosalind_lcs.txt  +RTS -s -c -M6G -RTS
+-}
+
 module Problem.LCS where
 
 import Data.List (sortBy, isInfixOf)
