@@ -25,6 +25,11 @@ AC
  execution took 4 GB memory and 60 seconds.  
 
 main.exe < rosalind_lcs.txt  +RTS -s -c -M6G -RTS
+
+UPD: now it's running for 30 sec with 4 MB used
+main < d:\temp\rosalind_lcsm.txt  +RTS -s -c -M3G -RTS
+
+FASTA input is not supported
 -}
 
 module Problem.LCSM where
@@ -54,7 +59,8 @@ testSplitPattern =     "GATTACA" == head splitResult -- test ordering
 
 
 process :: String -> [String]
-process input = take 1 $ findIntersections (head preparedData) 
+process input = take 1 . reverse . sortByLength $ 
+                                         findIntersections (head preparedData) 
                                          (tail preparedData) -- the head of data is used as a pattern, no need to re-check
     where preparedData = sortByLength $ filter (/= []) $ lines input  -- sorting to have a shortest element as a head
 
@@ -72,7 +78,7 @@ sortByLength = sortBy (compare `on` length)
 
 -- split pattern into an ordered (longest to shortest) list of patterns
 splitPattern :: Int -> String -> [String]
-splitPattern minLength = reverse . sortByLength . subsequences' minLength
+splitPattern minLength = subsequences' minLength
 
 subsequences' :: Int -> String -> [String]
 subsequences' minLength str = subsequences''' str (length str) minLength
