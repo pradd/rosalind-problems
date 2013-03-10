@@ -27,7 +27,7 @@ AC
 main.exe < rosalind_lcs.txt  +RTS -s -c -M6G -RTS
 -}
 
-module Problem.LCS where
+module Problem.LCSM where
 
 import Data.List (sortBy, isInfixOf)
 import Data.Function (on)

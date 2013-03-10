@@ -2,7 +2,7 @@ module Main where
 
 import Problem.GC (test, testGcContent)
 import Problem.PERM (test)
-import Problem.LCS (test, testSplitPattern)
+import Problem.LCSM (test, testSplitPattern)
 
 main :: IO ()
 main = putStrLn testResults 
@@ -16,6 +16,6 @@ tests :: [(Bool, String)]
 tests = [ (Problem.GC.test,                 "GC   : main                ")
         , (Problem.GC.testGcContent,        "GC   : gc-content          ")
         , (Problem.PERM.test,               "PERM : main                ")
-        , (Problem.LCS.test,                "LCS  : main                ")
-        , (Problem.LCS.testSplitPattern,    "LCS  : testSplitPattern    ")
+        , (Problem.LCSM.test,               "LCSM  : main               ")
+        , (Problem.LCSM.testSplitPattern,   "LCSM  : testSplitPattern   ")
         ]
