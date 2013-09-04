@@ -1,5 +1,5 @@
 module Main where
 
-import Problem.LCSM
+import Problem.PRTM
 
 main = interact (show . process)

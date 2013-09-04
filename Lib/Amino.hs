@@ -67,3 +67,26 @@ rna_codon "GGU" = 'G'
 rna_codon "GGC" = 'G'
 rna_codon "GGA" = 'G'
 rna_codon "GGG" = 'G'
+
+monoisotopic_mass :: Char -> Double
+monoisotopic_mass 'A' = 71.03711
+monoisotopic_mass 'C' = 103.00919
+monoisotopic_mass 'D' = 115.02694
+monoisotopic_mass 'E' = 129.04259
+monoisotopic_mass 'F' = 147.06841
+monoisotopic_mass 'G' = 57.02146
+monoisotopic_mass 'H' = 137.05891
+monoisotopic_mass 'I' = 113.08406
+monoisotopic_mass 'K' = 128.09496
+monoisotopic_mass 'L' = 113.08406
+monoisotopic_mass 'M' = 131.04049
+monoisotopic_mass 'N' = 114.04293
+monoisotopic_mass 'P' = 97.05276
+monoisotopic_mass 'Q' = 128.05858
+monoisotopic_mass 'R' = 156.10111
+monoisotopic_mass 'S' = 87.03203
+monoisotopic_mass 'T' = 101.04768
+monoisotopic_mass 'V' = 99.06841
+monoisotopic_mass 'W' = 186.07931
+monoisotopic_mass 'Y' = 163.06333 
+monoisotopic_mass _ = undefined
