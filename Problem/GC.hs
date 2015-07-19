@@ -67,7 +67,7 @@ gcContent (DNA dna) = fromIntegral gcCount / fromIntegral total
               isGC _ = False
 
 process :: FastaFileString -> String 
-process input = toPrintableFormat $ foldl1 max' $ map countGcContent $ parseFastaFileString input 
+process input = toPrintableFormat $ foldl1 max' $ map countGcContent $ parseFastaToNucleoRecords input 
     where countGcContent (FastaRecord { desc = d, nucleoStr = ns}) = (d, gcContent $ nucleotidesToDna ns)
           max' x@(_, gc1) y@(_, gc2) | gc2 > gc1 = y
                                      | otherwise = x

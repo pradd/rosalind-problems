@@ -1,6 +1,4 @@
-module Lib.Fasta
-    (parseFastaFileString, FastaFileString, FastaRecord(..))
-    where
+module Lib.Fasta (parseFastaToNucleoRecords, FastaFileString, FastaRecord(..), parseFastaToCharsRecords, FastaCharsRecord(..)) where
 
 import Data.String.Utils ( strip, split )
 
@@ -8,17 +6,23 @@ import Lib.Nucleotide
 
 type FastaFileString = String
 
-data FastaRecord = FastaRecord 	{ desc :: String
+data FastaRecord = FastaRecord  { desc :: String
                                 , nucleoStr :: [Nucleotide]
                                 }
                                 deriving (Eq, Show, Read)
 
-parseFastaFileString :: FastaFileString -> [FastaRecord]
-parseFastaFileString s = map stringToRecord splitRecords
-    where 	splitRecords = filter (/= []) $ split ">" $ strip s
+data FastaCharsRecord = FastaCharsRecord    { fastaDesc :: String
+                                            , fastaStr :: [Char]
+                                            }
+                                            deriving (Eq, Show, Read)
 
-stringToRecord :: String -> FastaRecord
-stringToRecord s = FastaRecord { desc = head ls, nucleoStr = stringToNucleotides $ concat $ tail ls }
-    where ls = lines s
+parseFastaToNucleoRecords :: FastaFileString -> [FastaRecord]
+parseFastaToNucleoRecords s = map strToNucleo $ parseFastaToCharsRecords s
+    where   strToNucleo :: FastaCharsRecord -> FastaRecord
+            strToNucleo (FastaCharsRecord id str) = FastaRecord id (stringToNucleotides $ str)
 
-
+parseFastaToCharsRecords :: FastaFileString -> [FastaCharsRecord]
+parseFastaToCharsRecords fileString = map stringToRecord splitRecords
+    where   splitRecords = filter (/= []) $ split ">" $ unlines $ filter (/= []) $ map strip $ lines fileString
+            stringToRecord :: String -> FastaCharsRecord
+            stringToRecord ls = FastaCharsRecord (head $ lines ls) (concat $ tail $ lines ls)
