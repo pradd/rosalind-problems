@@ -1,5 +1,5 @@
 module Main where
 
-import Problem.PRTM
+import Problem.CONS
 
-main = interact (show . process)
+main = interact process
