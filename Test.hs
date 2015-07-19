@@ -3,6 +3,7 @@ module Main where
 import Problem.GC (test, testGcContent)
 import Problem.PERM (test)
 import Problem.LCSM (test, testSplitPattern)
+import Problem.SIGN (test)
 
 main :: IO ()
 main = putStrLn testResults 
@@ -18,4 +19,5 @@ tests = [ (Problem.GC.test,                 "GC   : main                ")
         , (Problem.PERM.test,               "PERM : main                ")
         , (Problem.LCSM.test,               "LCSM  : main               ")
         , (Problem.LCSM.testSplitPattern,   "LCSM  : testSplitPattern   ")
+        , (Problem.SIGN.test            ,   "SIGN  : test               ")
         ]
